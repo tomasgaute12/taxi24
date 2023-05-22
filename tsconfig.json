@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "ES6",
+    "strict": true,
+    "moduleResolution": "node",
+    "removeComments": true,
+    "sourceMap": true,
+    "noLib": false,
+    "allowJs": true,
+    "declaration": true,
+    "lib": ["es6", "es5"],
+    "outDir": "dist",
+    "typeRoots": ["node_modules/@types"],
+    "useUnknownInCatchVariables": false,
+    "experimentalDecorators": true, 
+    "strictPropertyInitialization": false,
+
+  },
+  "include": ["src/**/*", "test/**/*", "generated/**/*"],
+  "exclude": ["dist", "node_modules"]
+}
