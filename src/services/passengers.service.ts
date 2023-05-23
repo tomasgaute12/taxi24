@@ -9,7 +9,7 @@ export class PassengersService {
   ) {}
 
   async read(id: string): Promise<Passengers | undefined> {
-    return this.repository.read(id);
+    return await  this.repository.read(id);
   }
 
   async create(userId: string,passenger: Passengers): Promise<Passengers | undefined> {
@@ -25,13 +25,13 @@ export class PassengersService {
 
   async update(id: string, item: Passengers): Promise<boolean> {
     if (await this.repository.findById(id)) {
-      return this.repository.update(id, item);
+      return await this.repository.update(id, item);
     }
     throw new Error('Passenger not found');
   }
 
   async delete(id: string): Promise<boolean> {
-    return this.repository.delete(id);
+    return await  this.repository.delete(id);
   }
 
   async search(query?: string): Promise<object[]> {

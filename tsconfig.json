@@ -3,7 +3,6 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
     "target": "ES6",
     "strict": true,
     "moduleResolution": "node",

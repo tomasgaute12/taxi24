@@ -8,7 +8,7 @@ export class InvoicesService {
   ) {}
 
   async read(id: string): Promise<Invoices | undefined> {
-    return this.repository.read(id);
+    return await  this.repository.read(id);
   }
 
   async create(invoice: Invoices): Promise<Invoices | undefined> {
@@ -17,7 +17,7 @@ export class InvoicesService {
   }
 
   async delete(id: string): Promise<boolean> {
-    return this.repository.delete(id);
+    return await  this.repository.delete(id);
   }
 
   async search(query?: string): Promise<Invoices[]> {
@@ -27,7 +27,7 @@ export class InvoicesService {
   }
 
   async findById(id: string): Promise<Invoices | undefined> {
-    return this.repository.findById(id);
+    return await  this.repository.findById(id);
   }
 
 }

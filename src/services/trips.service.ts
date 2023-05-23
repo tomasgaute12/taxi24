@@ -14,7 +14,7 @@ export class TripsService {
   ) {}
 
   async read(id: string): Promise<Trips | undefined> {
-    return this.repository.read(id);
+    return await this.repository.read(id);
   }
 
   async create( passengerId: string,trip: Trips): Promise<ShowTrip | undefined> {
@@ -115,7 +115,7 @@ export class TripsService {
   
 
   async delete(id: string): Promise<boolean> {
-    return this.repository.delete(id);
+    return await this.repository.delete(id);
   }
 
   async search(query?: string): Promise<Trips[]> {
@@ -125,7 +125,7 @@ export class TripsService {
   }
 
   async findById(id: string): Promise<Trips | undefined> {
-    return this.repository.findById(id);
+    return await this.repository.findById(id);
   }
   
 

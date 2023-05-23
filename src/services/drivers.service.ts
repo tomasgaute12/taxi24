@@ -10,7 +10,7 @@ export class DriversService {
   ) {}
 
   async read(id: string): Promise<Drivers | undefined> {
-    return this.repository.read(id);
+    return await  this.repository.read(id);
   }
 
   async create(userId: string,driver: Drivers): Promise<Drivers | undefined> {
@@ -32,7 +32,7 @@ export class DriversService {
 
   async update(id: string, item: Drivers): Promise<boolean> {
     if (await this.repository.findById(id)) {
-      return this.repository.update(id, item);
+      return await this.repository.update(id, item);
     }
     throw new Error('Driver not found');
   }
@@ -41,7 +41,7 @@ export class DriversService {
     let driver = await this.repository.findById(id)
     if (driver) {
       driver.isActive = false
-      return this.repository.update(id, driver);
+      return await  this.repository.update(id, driver);
     }
     throw new Error('Driver not found');
   }
@@ -50,13 +50,13 @@ export class DriversService {
     let driver = await this.repository.findById(id)
     if (driver) {
       driver.isActive = true
-      return this.repository.update(id, driver);
+      return await this.repository.update(id, driver);
     }
     throw new Error('Driver not found');
   }
 
   async delete(id: string): Promise<boolean> {
-    return this.repository.delete(id);
+    return await  this.repository.delete(id);
   }
 
   async getActiveDrivers(): Promise<Drivers[] | undefined> {

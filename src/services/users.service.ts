@@ -1,6 +1,5 @@
-import { Passengers } from '../models/passengers';
-import { UserRole, Users } from '../models/users';
-import { PassengersRepository } from '../repositories/passengers.repository';
+
+import {  Users } from '../models/users';
 import { UsersRepository } from '../repositories/users.repository';
 import bcrypt from 'bcrypt';
 
@@ -10,7 +9,7 @@ export class UsersService {
   ) {}
 
   async read(id: string): Promise<Users | undefined> {
-    return this.repository.read(id);
+    return await this.repository.read(id);
   }
 
   async create(user: Users): Promise<Users | undefined> {
@@ -35,17 +34,17 @@ export class UsersService {
 
   async update(id: string, item: Users): Promise<boolean> {
     if (await this.repository.findById(id)) {
-      return this.repository.update(id, item);
+      return await this.repository.update(id, item);
     }
     throw new Error('Users not found');
   }
 
   async delete(id: string): Promise<boolean> {
-    return this.repository.delete(id);
+    return await  this.repository.delete(id);
   }
 
   async findByRole(role: string): Promise<boolean> {
-    return this.repository.delete(role.toUpperCase());
+    return await this.repository.delete(role.toUpperCase());
   }
 
   async search(query?: string): Promise<Users[]> {
@@ -56,8 +55,7 @@ export class UsersService {
   }
 
   async findById(id: string): Promise<Users | undefined> {
-    return this.repository.findById(id);
+    return await this.repository.findById(id);
   }
-  
 
 }
