@@ -9,12 +9,12 @@ import { tripsSchema } from '../schemas/trips.schema';
 export default function tripsRouter(service: TripsService): Router {
   return Router()
     .get('/activeTrips', async (_, res: Response) => {
-      const trips = await service.getActiveTrips();
+      const trips = await service.getActiveTrips().catch((error: Error) => error);
       res.status(200).json(trips);
     })
     .get('/:id', async (req: Request, res: Response) => {
       const { id } = req.params;
-      const trip = await service.findById(id);
+      const trip = await service.findById(id).catch((error: Error) => error);
       return res.json(trip);
     })
     .post('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -31,7 +31,7 @@ export default function tripsRouter(service: TripsService): Router {
           next(result);
           return;
         }
-        res.status(StatusCodes.OK).json({message:'Viaje creado con exito!',result});
+        res.status(StatusCodes.OK).json({message:'Trip created successfully!',result});
       }
     })
     .patch('/completeTrip/:id', async (req: Request, res: Response, next: NextFunction) => {
@@ -41,7 +41,7 @@ export default function tripsRouter(service: TripsService): Router {
         next(result);
         return;
       }
-      res.status(StatusCodes.OK).json({message:'Viaje Finalizado!',invoice:result});
+      res.status(StatusCodes.OK).json({message:'Trip Over!',invoice:result});
     })
     .delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
       const { id } = req.params;

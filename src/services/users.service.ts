@@ -26,9 +26,11 @@ export class UsersService {
     user.password = bcrypt.hashSync(user.password!, 10);
     user.email = user.email.toLowerCase();
     const result = await this.repository.create(user);
+
     if (result) {
       delete result.password;
     }
+
     return result;
   }
 

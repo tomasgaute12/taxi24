@@ -31,26 +31,23 @@ export default function passengersRouter(service: PassengersService): Router {
           next(result);
           return;
         }
-        res.status(StatusCodes.OK).json({message:'Usuario registrado como Pasajero',result});
+        res.status(StatusCodes.OK).json({message:'User registered as Passenger',result});
       }
     })
-    .patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
+    .patch('/ubication/:id', async (req: Request, res: Response, next: NextFunction) => {
       const { id } = req.params;
-      const result = await service.update(id, req.body).catch((error: Error) => error);
-      if (isAnError(result)) {
-        next(result);
-        return;
+      const { ubication } = req.body;
+      if (ubication.lat && ubication.long) {
+        const {lat , long } = ubication;
+        req.body.ubication = {lat,long}
+        const result = await service.updateUbication(id, req.body).catch((error: Error) => error);
+        if (isAnError(result)) {
+          next(result);
+          return;
+        }
+        res.status(StatusCodes.OK).json({message:'Passenger Ubication Updated!',result});
+      } else {
+        return res.status(400).json({ error: 'Required latitude and longitude parameters.' });
       }
-      res.status(StatusCodes.NO_CONTENT).json();
     })
-    .delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
-      const { id } = req.params;
-      const result = await service.delete(id).catch((error: Error) => error);
-      if (isAnError(result)) {
-        next(result);
-        return;
-      }
-      res.status(StatusCodes.OK).json({message:'Passenger Deleted'});
-    })
-
 }

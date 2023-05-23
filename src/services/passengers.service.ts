@@ -23,8 +23,10 @@ export class PassengersService {
     return result;
   }
 
-  async update(id: string, item: Passengers): Promise<boolean> {
-    if (await this.repository.findById(id)) {
+  async updateUbication(id: string, item: Passengers): Promise<boolean> {
+    const passenger = await this.repository.findById(id)
+    if (passenger) {
+      passenger.ubication = item.ubication;
       return await this.repository.update(id, item);
     }
     throw new Error('Passenger not found');
@@ -50,8 +52,6 @@ export class PassengersService {
 
   async findById(id: string): Promise<Passengers | undefined> {
     const passenger = await this.repository.findById(id);
-    console.log("Im here: ", id);
-    
     if (!passenger) {
       return undefined;
     }

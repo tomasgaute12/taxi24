@@ -30,8 +30,10 @@ export class DriversService {
     return result;
   }
 
-  async update(id: string, item: Drivers): Promise<boolean> {
-    if (await this.repository.findById(id)) {
+  async updateUbication(id: string, item: Drivers): Promise<boolean> {
+    const driver = await this.repository.findById(id)
+    if (driver) {
+      driver.ubication = item.ubication;
       return await this.repository.update(id, item);
     }
     throw new Error('Driver not found');

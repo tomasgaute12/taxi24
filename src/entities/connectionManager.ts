@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
 
 import { logger } from '../logger';
-import {UserRoleEntity} from './user-role.entity'
 import { UsersEntity } from './users.entity';
 import { PassengersEntity } from './passenger.entity';
 import { DriversEntity } from './drivers.entity';
@@ -15,13 +14,12 @@ const PostgresDataSource = new DataSource({
   type: 'postgres',
   synchronize: true,
   logging: true,
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'Areloco',
-  database: 'taxi24db',
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   entities: [
-    UserRoleEntity,
     UsersEntity,
     PassengersEntity,
     DriversEntity,

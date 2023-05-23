@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
-
 import { isAnError } from '../utils/error';
 import Validator from 'jsonschema';
 import { DriversService } from '../services/drivers.service';
@@ -20,9 +19,9 @@ export default function driversRouter(service: DriversService): Router {
         const latitude = parseFloat(lat);
         const longitude = parseFloat(long);
         const activeDrivers = await service.nearbyDrivers(latitude, longitude).catch((error: Error) => error);
-        res.status(StatusCodes.OK).json({message:'Drivers a un radio de 3km',activeDrivers});
+        res.status(StatusCodes.OK).json({message:'Drivers within a 3 km radius',activeDrivers});
       } else {
-        return res.status(400).json({ error: 'Parámetros de latitud y longitud requeridos.' });
+        return res.status(400).json({ error: 'Required latitude and longitude parameters.' });
       }
     })
     .get('/', async (_, res: Response) => {
@@ -50,27 +49,24 @@ export default function driversRouter(service: DriversService): Router {
           next(result);
           return;
         }
-        res.status(StatusCodes.OK).json({message:'Usuario registrado como Conductor',result});
+        res.status(StatusCodes.OK).json({message:'User registered as Driver',result});
       }
     })
-    .patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
+    .patch('/ubication/:id', async (req: Request, res: Response, next: NextFunction) => {
       const { id } = req.params;
-      const result = await service.update(id, req.body).catch((error: Error) => error);
-      if (isAnError(result)) {
-        next(result);
-        return;
+      const { ubication } = req.body;
+      if (ubication.lat && ubication.long) {
+        const {lat , long } = ubication;
+        req.body.ubication = {lat,long}
+        const result = await service.updateUbication(id, req.body).catch((error: Error) => error);
+        if (isAnError(result)) {
+          next(result);
+          return;
+        }
+        res.status(StatusCodes.OK).json({message:'Driver Ubication Updated!',result});
+      } else {
+        return res.status(400).json({ error: 'Required latitude and longitude parameters.' });
       }
-      res.status(StatusCodes.NO_CONTENT).json();
     })
-    .delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
-      const { id } = req.params;
-      const result = await service.delete(id).catch((error: Error) => error);
-      if (isAnError(result)) {
-        next(result);
-        return;
-      }
-      res.status(StatusCodes.OK).json({message:'Driver Deleted'});
-    })
-
 }
 

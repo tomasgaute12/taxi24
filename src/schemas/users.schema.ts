@@ -8,7 +8,6 @@ export const usersSchema = {
     'email',
     'username',
     'password',
-    "role",
   ],
   properties: {
     name: {
@@ -36,14 +35,6 @@ export const usersSchema = {
     password: {
       type: 'string',
       minLength: 1,
-    },
-    role: {
-      type: 'string',
-      enum: ['PASSENGER', 'DRIVER'],
-    },
-    // status: {
-    //   type: 'string',
-    //   enum: ['active', 'inactive', 'deactivated'],
-    // },
+    }
   },
 };

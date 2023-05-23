@@ -6,11 +6,5 @@ export interface Users extends BaseObject, ExtensibleObject {
   phone: string
   email: string
   username: string
-  role: UserRole
   password?: string,
-}
-
-export enum UserRole {
-  PASSENGER = 'PASSENGER',
-  DRIVER = 'DRIVER',
 }

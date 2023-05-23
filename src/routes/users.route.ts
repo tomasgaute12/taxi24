@@ -9,7 +9,7 @@ import { usersSchema } from '../schemas/users.schema';
 export default function usersRouter(service: UsersService): Router {
   return Router()
     .get('/', async (_, res: Response) => {
-      const users = await service.search();
+      const users = await service.search().catch((error: Error) => error);
       res.status(200).json(users);
     })
     .post('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -25,6 +25,7 @@ export default function usersRouter(service: UsersService): Router {
           next(result);
           return;
         }
+        res.status(StatusCodes.OK).json({message:'User registered',result});
       }
     })
     .patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
@@ -36,14 +37,4 @@ export default function usersRouter(service: UsersService): Router {
       }
       res.status(StatusCodes.NO_CONTENT).json();
     })
-    .delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
-      const { id } = req.params;
-      const result = await service.delete(id).catch((error: Error) => error);
-      if (isAnError(result)) {
-        next(result);
-        return;
-      }
-      res.status(StatusCodes.OK).json({message:'User Deleted'});
-    })
-
 }

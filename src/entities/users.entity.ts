@@ -1,9 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Users, UserRole } from '../models/users';
-import { UserRoleEntity } from './user-role.entity';
-
-
+import { Users } from '../models/users';
 @Entity({ name: 'users' })
 export class UsersEntity implements Users {
   @PrimaryGeneratedColumn('uuid')
@@ -26,10 +23,6 @@ export class UsersEntity implements Users {
 
   @Column({ name: 'password', type: 'varchar' })
     password: string;
-
-  @ManyToOne(() => UserRoleEntity, (role) => role.id, { nullable: false })
-  @JoinColumn({ name: 'role', referencedColumnName: 'id' })
-    role: UserRole;
 
   @Column({ name: 'created_at', type: 'timestamp', nullable: false, default: () => 'now()' })
     createdAt: Date;
