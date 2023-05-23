@@ -46,6 +46,15 @@ export class DriversService {
     throw new Error('Driver not found');
   }
 
+  async activeDriver(id: string): Promise<boolean> {
+    let driver = await this.repository.findById(id)
+    if (driver) {
+      driver.isActive = true
+      return this.repository.update(id, driver);
+    }
+    throw new Error('Driver not found');
+  }
+
   async delete(id: string): Promise<boolean> {
     return this.repository.delete(id);
   }

@@ -8,8 +8,8 @@ import { tripsSchema } from '../schemas/trips.schema';
 
 export default function tripsRouter(service: TripsService): Router {
   return Router()
-    .get('/', async (_, res: Response) => {
-      const trips = await service.search();
+    .get('/activeTrips', async (_, res: Response) => {
+      const trips = await service.getActiveTrips();
       res.status(200).json(trips);
     })
     .get('/:id', async (req: Request, res: Response) => {
@@ -34,14 +34,14 @@ export default function tripsRouter(service: TripsService): Router {
         res.status(StatusCodes.OK).json({message:'Viaje creado con exito!',result});
       }
     })
-    .patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
+    .patch('/completeTrip/:id', async (req: Request, res: Response, next: NextFunction) => {
       const { id } = req.params;
-      const result = await service.update(id, req.body).catch((error: Error) => error);
+      const result = await service.completeTrip(id).catch((error: Error) => error);
       if (isAnError(result)) {
         next(result);
         return;
       }
-      res.status(StatusCodes.NO_CONTENT).json();
+      res.status(StatusCodes.OK).json({message:'Viaje Finalizado!',invoice:result});
     })
     .delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
       const { id } = req.params;

@@ -2,8 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn
 
 import { UsersEntity } from './users.entity';
 import { Users } from '../models/users';
-import { DriverState, Drivers, Ubication } from '../models/drivers';
-
+import { Drivers, Ubication } from '../models/drivers';
 
 @Entity({ name: 'drivers' })
 export class DriversEntity implements Drivers {
@@ -24,9 +23,6 @@ export class DriversEntity implements Drivers {
 
   @Column({ name: 'ubication', type: 'jsonb', nullable: false })
     ubication: Ubication;
-
-  @Column({ name: 'state', type: 'varchar', nullable: false, default: 'RELEASED' })
-    state: DriverState;
 
   @Column({ name: 'created_at', type: 'timestamp', nullable: false, default: () => 'now()' })
     createdAt: Date;

@@ -9,18 +9,22 @@ import usersRouter from './routes/users.route';
 import passengersRouter from './routes/passengers.route';
 import driversRouter from './routes/drivers.route';
 import tripsRouter from './routes/trips.route';
+import invoicesRouter from './routes/invoices.route';
 import { UserDAO } from './data-access/user.dao';
 import { PassengerDAO } from './data-access/passenger.dao';
 import { DriverDAO } from './data-access/drivers.dao';
 import { TripsDAO } from './data-access/trips.dao';
+import { InvoicesDAO } from './data-access/invoices.dao';
 import { UsersRepository } from './repositories/users.repository';
 import { PassengersRepository } from './repositories/passengers.repository';
 import { DriversRepository } from './repositories/drivers.repository';
 import { TripsRepository } from './repositories/trips.repository';
+import { InvoicesRepository } from './repositories/invoices.repository';
 import { UsersService } from './services/users.service';
 import { PassengersService } from './services/passengers.service';
 import { DriversService } from './services/drivers.service';
 import { TripsService } from './services/trips.service';
+import { InvoicesService } from './services/invoices.service';
 
 
 export default async function Server() {
@@ -30,12 +34,14 @@ export default async function Server() {
   const passengersRepo: PassengersRepository = new PassengerDAO();
   const driversRepo: DriversRepository = new DriverDAO();
   const tripsRepo: TripsRepository = new TripsDAO();
+  const invoiceRepo: InvoicesRepository = new InvoicesDAO();
   
   //Services
   const usersService: UsersService = new UsersService(usersRepo);
   const passengersService: PassengersService = new PassengersService(passengersRepo,usersRepo);
-  const driversService: DriversService = new DriversService(driversRepo,usersRepo)
-  const tripsService: TripsService = new TripsService(tripsRepo,passengersRepo,driversService);
+  const driversService: DriversService = new DriversService(driversRepo,usersRepo);
+  const invoiceService: InvoicesService = new InvoicesService(invoiceRepo);
+  const tripsService: TripsService = new TripsService(tripsRepo,passengersRepo,driversService, invoiceService);
   
   const port = process.env.PORT || 5050;
   const app = express()
@@ -58,6 +64,7 @@ export default async function Server() {
     .use('/passenger', passengersRouter(passengersService))
     .use('/driver', driversRouter(driversService))
     .use('/trip', tripsRouter(tripsService))
+    .use('/invoice', invoicesRouter(invoiceService))
     .get('/', (_, res: Response) => {
       res.send('Hello World!');
     })

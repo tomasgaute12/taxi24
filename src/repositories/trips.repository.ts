@@ -4,4 +4,5 @@ import { ISearch } from './interfaces/ISearch';
 
 export interface TripsRepository extends ICRUD<Trips>, ISearch<Trips> {
   findById(id: string): Promise<Trips | undefined>;
+  getActiveTrips(): Promise<Trips[] | undefined>;
 }

@@ -43,7 +43,7 @@ export default function usersRouter(service: UsersService): Router {
         next(result);
         return;
       }
-      res.status(StatusCodes.NO_CONTENT).json();
+      res.status(StatusCodes.OK).json({message:'User Deleted'});
     })
 
 }

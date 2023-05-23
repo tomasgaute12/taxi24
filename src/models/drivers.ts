@@ -8,15 +8,9 @@ export interface Drivers extends BaseObject, ExtensibleObject {
   carPlateNumber: string,
   isActive: boolean,
   ubication: Ubication
-  state: DriverState
 }
 
 export interface Ubication {
   lat: number;
   long: number;
-}
-
-export enum DriverState {
-  BUSY = 'BUSY',
-  RELEASED  = 'RELEASED ',
 }

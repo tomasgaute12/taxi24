@@ -53,15 +53,6 @@ export default function driversRouter(service: DriversService): Router {
         res.status(StatusCodes.OK).json({message:'Usuario registrado como Conductor',result});
       }
     })
-    .patch('/disable/:id', async (req: Request, res: Response, next: NextFunction) => {
-      const { id } = req.params;
-      const result = await service.disableDriver(id).catch((error: Error) => error);
-      if (isAnError(result)) {
-        next(result);
-        return;
-      }
-      res.status(StatusCodes.OK).json({message:'Conductor Desactivado',result});
-    })
     .patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
       const { id } = req.params;
       const result = await service.update(id, req.body).catch((error: Error) => error);
@@ -71,7 +62,6 @@ export default function driversRouter(service: DriversService): Router {
       }
       res.status(StatusCodes.NO_CONTENT).json();
     })
-
     .delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
       const { id } = req.params;
       const result = await service.delete(id).catch((error: Error) => error);
@@ -79,7 +69,7 @@ export default function driversRouter(service: DriversService): Router {
         next(result);
         return;
       }
-      res.status(StatusCodes.NO_CONTENT).json();
+      res.status(StatusCodes.OK).json({message:'Driver Deleted'});
     })
 
 }

@@ -50,7 +50,7 @@ export default function passengersRouter(service: PassengersService): Router {
         next(result);
         return;
       }
-      res.status(StatusCodes.NO_CONTENT).json();
+      res.status(StatusCodes.OK).json({message:'Passenger Deleted'});
     })
 
 }

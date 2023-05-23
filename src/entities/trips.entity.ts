@@ -18,6 +18,9 @@ export class TripsEntity implements Trips {
   @Column({ name: 'endTime', type: 'bigint', nullable: true })
     endTime: number;
 
+  @Column({ name: 'price', type: 'float', nullable: true })
+    price: number;
+
   @Column({ name: 'startLocation', type: 'jsonb', nullable: false })
     startLocation: Ubication;
 

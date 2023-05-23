@@ -1,7 +1,7 @@
-  // Función para convertir grados a radianes
-  function deg2rad(grados) {
-    return (grados * Math.PI) / 180;
-  }
+// Función para convertir grados a radianes
+function deg2rad(grados) {
+  return (grados * Math.PI) / 180;
+}
 
 // Función para calcular la distancia en kilómetros entre dos puntos
 export function calculateDistanceInKm(latitud1: number, longitud1: number, latitud2: number, longitud2: number) {
@@ -27,25 +27,35 @@ export function calculateDistanceInKm(latitud1: number, longitud1: number, latit
     return distancia;
   }
 
-  export function calculateEstimatedArrivalTime(startLocation, endLocation) {
-    
-    const distanciaKm = calculateDistanceInKm(
-      startLocation.lat,
-      startLocation.long,
-      endLocation.lat,
-      endLocation.long
-    );
-    
-    const velocidadPromedio = 60;
-    const tiempoEstimadoHoras = distanciaKm / velocidadPromedio;
-  
-    // Tiempo adicional para retrasos o condiciones de tráfico
-    const tiempoAdicionalHoras = 0.5; // Por ejemplo, 30 minutos adicionales
-  
-    const horaActual = new Date();
-    const horaEstimadaLlegada = new Date(horaActual.getTime() + tiempoEstimadoHoras * 3600000 + tiempoAdicionalHoras * 3600000);
-  
-    return horaEstimadaLlegada;
-  }
-  
+  // Función para calcular el tiempo de llegada
+export function calculateTimeArrival(ubicacionInicial, ubicacionFinal) {
+  const lat1= ubicacionInicial.lat;
+  const long1 = ubicacionInicial.long;
+  const lat2 = ubicacionFinal.lat;
+  const long2 = ubicacionFinal.long
+  const distancia = calculateDistanceInKm(lat1,long1,lat2,long2);
+  const velocidadPromedio = 60; // km/h 
 
+  const tiempoEnHoras = distancia / velocidadPromedio;
+  const tiempoEnMinutos = tiempoEnHoras * 60;
+
+  const tiempoEstimadoEnMilisegundos = tiempoEnMinutos * 60000; // Convertir minutos a milisegundos
+
+  const tiempoLlegada = new Date(Date.now() + tiempoEstimadoEnMilisegundos);
+
+  return tiempoLlegada;
+}
+
+// Función para calcular el costo por kilómetro recorrido
+export function calculatePrice(ubicacionInicial, ubicacionFinal) {
+  const lat1= ubicacionInicial.lat;
+  const long1 = ubicacionInicial.long;
+  const lat2 = ubicacionFinal.lat;
+  const long2 = ubicacionFinal.long
+  const distancia = calculateDistanceInKm(lat1,long1,lat2,long2);
+  const tarifaPorKilometro = 2.5; // (ejemplo: tarifa de USD 2.5 por kilómetro)
+
+  const costoTotal = distancia * tarifaPorKilometro;
+
+  return Number(costoTotal.toFixed(2));
+}

@@ -9,7 +9,8 @@ export interface Trips extends BaseObject, ExtensibleObject {
   endLocation: Ubication,
   startTime: number,
   endTime: number,
-  state: TripsState
+  state: TripsState,
+  price: number;
 }
 
 export interface Ubication {
@@ -20,4 +21,13 @@ export interface Ubication {
 export enum TripsState {
   INITIATED = 'INITIATED',
   FINISHED  = 'FINISHED ',
+}
+
+
+export interface ShowTrip {
+  id:string,
+  estimatedTime?: Date,
+  price: number,
+  driver?: Drivers,
+  passenger?: Passengers,
 }

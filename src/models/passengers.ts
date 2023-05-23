@@ -7,6 +7,6 @@ export interface Passengers extends BaseObject, ExtensibleObject {
 }
 
 export interface Ubication {
-  lat: number;
-  long: number;
+  lat: number,
+  long: number,
 }

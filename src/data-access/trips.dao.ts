@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 
 import { getConnection } from '../entities/connectionManager';
 import { TripsRepository } from '../repositories/trips.repository';
-import { Trips } from '../models/trips';
+import { Trips, TripsState } from '../models/trips';
 import { TripsEntity } from '../entities/trips.entity';
 
 export class TripsDAO implements TripsRepository {
@@ -23,6 +23,17 @@ export class TripsDAO implements TripsRepository {
     return result ? result as Trips : undefined;
   }
 
+  async getActiveTrips(): Promise<Trips[] | undefined> {
+    const result = await this.connection
+      .createQueryBuilder()
+      .select('trip')
+      .from(TripsEntity, 'trip')
+      .where('trip.state = :state', { state: TripsState.INITIATED })
+      .loadAllRelationIds()
+      .getMany();
+
+    return result ? result as Trips[] : undefined;
+  }
   async create(item: Trips): Promise<Trips | undefined> {
     const result = await this.connection
       .createQueryBuilder()

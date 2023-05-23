@@ -7,6 +7,7 @@ import { UsersEntity } from './users.entity';
 import { PassengersEntity } from './passenger.entity';
 import { DriversEntity } from './drivers.entity';
 import { TripsEntity } from './trips.entity';
+import { InvoicesEntity } from './invoices.entity';
 
 dotenv.config();
 
@@ -24,7 +25,8 @@ const PostgresDataSource = new DataSource({
     UsersEntity,
     PassengersEntity,
     DriversEntity,
-    TripsEntity
+    TripsEntity,
+    InvoicesEntity
   ],
 });
 
